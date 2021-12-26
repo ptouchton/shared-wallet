@@ -2,7 +2,9 @@
 
 pragma solidity ^0.8.1;
 
-contract SharedWallet {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract SharedWallet is Ownable {
     struct Payment {
         uint256 payment;
         uint256 timestamp;
@@ -16,31 +18,11 @@ contract SharedWallet {
 
     mapping(address => Balance) public balanceReceived;
 
-    address payable owner;
-
     uint256 public lockedUntil;
 
     /// The amount of Ether sent was not higher than
     /// the currently highest amount.
     error NotEnoughEther();
-
-    modifier onlyOwner () {
-        require(owner == msg.sender, "Not allowed, you are not the owner");
-        _;
-    }
-
-    constructor() {
-        owner = payable(msg.sender);
-    }
-
-    function getOwner() public view returns (address) {
-        return owner;
-    }
-
-    function destroySmartContract() public onlyOwner {
-        require(msg.sender == owner, "You are not the owner");
-        selfdestruct(owner);
-    }
 
     function getBalance() public view returns (uint256) {
         return address(this).balance;
