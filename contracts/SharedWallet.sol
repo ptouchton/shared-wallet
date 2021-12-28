@@ -24,6 +24,22 @@ contract SharedWallet is Ownable {
     /// the currently highest amount.
     error NotEnoughEther();
 
+    modifier ownerOrAllowed(uint256 _amount) {
+        require(
+            owner() == msg.sender ||
+                balanceReceived[msg.sender].totalBalance >= _amount,
+            "You are not allowed"
+        );
+        _;
+    }
+
+    event AllowanceChanged(
+        address indexed _forWho,
+        address indexed _fromWhom,
+        uint256 _oldAmount,
+        uint256 _newAmount
+    );
+
     function getBalance() public view returns (uint256) {
         return address(this).balance;
     }
@@ -48,7 +64,7 @@ contract SharedWallet is Ownable {
         lockedUntil = block.timestamp + 1 minutes;
     }
 
-    function sendMoney(address payable _to, uint256 _amt) public payable {
+    function addAllowance(address payable _to, uint256 _amt) public payable {
         require(
             _amt < balanceReceived[msg.sender].totalBalance,
             "Not enough ether"
@@ -56,6 +72,13 @@ contract SharedWallet is Ownable {
         assert(
             balanceReceived[msg.sender].totalBalance >=
                 balanceReceived[msg.sender].totalBalance - _amt
+        );
+
+        emit AllowanceChanged(
+            _to,
+            msg.sender,
+            balanceReceived[_to].totalBalance,
+            balanceReceived[_to].totalBalance += _amt
         );
 
         balanceReceived[msg.sender].totalBalance -= _amt;
@@ -66,36 +89,34 @@ contract SharedWallet is Ownable {
             balanceReceived[msg.sender].numPayments
         ] = payment;
         balanceReceived[_to].numPayments++;
+
         lockedUntil = block.timestamp + 1 minutes;
     }
 
-
-    function withdrawMyMoney() public {
+    function withdrawMoney(address payable _to, uint256 _amt)
+        public
+        ownerOrAllowed(_amt)
+    {
+        require(
+            _amt <= address(this).balance,
+            "There are not enough funds in the smart contract"
+        );
         if (lockedUntil < block.timestamp) {
-            uint256 bal = balanceReceived[msg.sender].totalBalance;
-            assert(bal > 0 );
-            balanceReceived[msg.sender].totalBalance = 0;
+            emit AllowanceChanged(
+                _to,
+                msg.sender,
+                balanceReceived[msg.sender].totalBalance,
+                balanceReceived[msg.sender].totalBalance -= _amt
+            );
+            balanceReceived[msg.sender].totalBalance -= _amt;
 
-            address payable to = payable(msg.sender);
-            to.transfer(bal);
+            _to.transfer(_amt);
         }
     }
 
-    function withdrawMoney() public onlyOwner {
-        if (lockedUntil < block.timestamp) {
-            uint256 bal = getBalance();
-            assert(bal > 0 );
-            balanceReceived[msg.sender].totalBalance = 0;
-
-            address payable to = payable(msg.sender);
-            to.transfer(bal);
-        }
-
-    }
     function convertWeiToEth(uint256 _amount) public pure returns (uint256) {
         return _amount / 1 ether;
     }
-
 
     receive() external payable {
         receiveMoney();

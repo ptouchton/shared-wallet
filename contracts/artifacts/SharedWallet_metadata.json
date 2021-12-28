@@ -16,6 +16,37 @@
 					{
 						"indexed": true,
 						"internalType": "address",
+						"name": "_forWho",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_fromWhom",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_oldAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_newAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "AllowanceChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
 						"name": "previousOwner",
 						"type": "address"
 					},
@@ -28,6 +59,24 @@
 				],
 				"name": "OwnershipTransferred",
 				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amt",
+						"type": "uint256"
+					}
+				],
+				"name": "addAllowance",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -147,24 +196,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address payable",
-						"name": "_to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_amt",
-						"type": "uint256"
-					}
-				],
-				"name": "sendMoney",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "address",
 						"name": "newOwner",
 						"type": "address"
@@ -176,15 +207,19 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amt",
+						"type": "uint256"
+					}
+				],
 				"name": "withdrawMoney",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "withdrawMyMoney",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -255,11 +290,11 @@
 			]
 		},
 		"contracts/SharedWallet.sol": {
-			"keccak256": "0x7e82bfe2761772ceda52170a4a71fc86277f7a2cff9e0c0fac5d6df81a8d4d2e",
+			"keccak256": "0xfce898dd9f44c8b29c33ad0d02f395394ba373d9a72d1bd7b08afe74a0fa0b24",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://b6274920dbafc1673a68b1080476c13b820e5291ea0037bc4c346bc6e484aae3",
-				"dweb:/ipfs/QmdYqv2mDjg9Vh3PawAosXCUnumYACYkgP8tGhowx39EeE"
+				"bzz-raw://e66a57e5a57e6880ee0f12706a12a4e0a8ed8a0e75357dd526ad799e9918a54d",
+				"dweb:/ipfs/QmQx1hvjNyBFhMkkz8S5iUUL3sf43WyqUqbmzTT4EC3gN8"
 			]
 		}
 	},
