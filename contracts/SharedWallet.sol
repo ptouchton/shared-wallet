@@ -118,6 +118,15 @@ contract SharedWallet is Ownable {
         return _amount / 1 ether;
     }
 
+    function renounceOwnership() override public onlyOwner view {
+        revert("You cannot renounce");
+    }
+
+    function transferOwnership(address _newOwner) override public onlyOwner view {
+        require(owner() == _newOwner);
+        revert("You cannot transfer");
+    }
+
     receive() external payable {
         receiveMoney();
     }

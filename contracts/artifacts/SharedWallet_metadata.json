@@ -190,20 +190,20 @@
 				"inputs": [],
 				"name": "renounceOwnership",
 				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "newOwner",
+						"name": "_newOwner",
 						"type": "address"
 					}
 				],
 				"name": "transferOwnership",
 				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -237,9 +237,6 @@
 				},
 				"renounceOwnership()": {
 					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
-				},
-				"transferOwnership(address)": {
-					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
 				}
 			},
 			"version": 1
@@ -290,11 +287,11 @@
 			]
 		},
 		"contracts/SharedWallet.sol": {
-			"keccak256": "0xfce898dd9f44c8b29c33ad0d02f395394ba373d9a72d1bd7b08afe74a0fa0b24",
+			"keccak256": "0xd3c5d4f73ce2d4f9815dc33e05cc598fc315bf1efb852ff311343907bd85a42f",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://e66a57e5a57e6880ee0f12706a12a4e0a8ed8a0e75357dd526ad799e9918a54d",
-				"dweb:/ipfs/QmQx1hvjNyBFhMkkz8S5iUUL3sf43WyqUqbmzTT4EC3gN8"
+				"bzz-raw://2302749e97e9db1939419288e4a6a767107d309f0cb9ed90c4c67e65ed638c9e",
+				"dweb:/ipfs/QmeyTAjdqZQbApxqyKKk1tWfcTyGxQcyShWTzjUmi4A63t"
 			]
 		}
 	},
